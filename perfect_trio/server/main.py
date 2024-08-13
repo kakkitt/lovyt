@@ -15,9 +15,11 @@ from dotenv import load_dotenv, find_dotenv
 
 # 최신 LangChain 사용
 from langchain_openai import OpenAI  # 수정된 부분
+from langchain_openai import OpenAIEmbeddings  # 임베딩 생성용 클래스 임포트
 from langchain_community.vectorstores import FAISS
 from grader_utils import GraderUtils
 from document_loader import DocumentLoader
+
 
 
 # .env 파일에서 환경 변수 불러오기
@@ -39,12 +41,17 @@ os.environ['FIRE_API_KEY'] = os.getenv('FIRE_API_KEY')
 # LLM 초기화 (예: OpenAI API 사용)
 llm = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
+# 임베딩 생성기 초기화
+embedding_model = OpenAIEmbeddings(api_key=os.getenv("OPENAI_API_KEY"))
+
 # 문서 로더 및 벡터 스토어 초기화 (예시 코드)
 loader = DocumentLoader(api_key=os.getenv("FIRE_API_KEY"))
-docs = loader.get_docs("https://speckle.guide/dev/server-graphql-api.html#advanced-queries")
-retriever = FAISS.from_documents(docs, llm)
+docs = loader.get_docs("https://speckle.guide/dev/")
 
-# GraderUtils 객체 생성
+# 벡터 스토어 생성
+retriever = FAISS.from_documents(docs, embedding_model)
+
+# GraderUtils 객체 생성 및 그레이더 초기화
 grader_utils = GraderUtils(llm)
 retrieval_grader = grader_utils.create_retrieval_grader()
 hallucination_grader = grader_utils.create_hallucination_grader()

@@ -1,5 +1,11 @@
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.output_parsers import StrOutputParser
+
+from langchain import hub
+from langchain.prompts import PromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langsmith import Client
 
 class GraderUtils:
     def __init__(self, model):
@@ -79,9 +85,16 @@ class GraderUtils:
 
     def create_question_rewriter(self):
         """
-        질문을 더 명확하고 관련성 있게 다시 작성하는 리라이터 체인을 생성합니다.
+        Creates a question rewriter chain that rewrites a given question to improve its clarity and relevance.
+
+        Returns:
+            A callable function that takes a question as input and returns the rewritten question as a string.
         """
-        re_write_prompt = hub.pull("efriis/self-rag-question-rewriter")
+        # LangSmith Client를 사용하여 프롬프트 가져오기
+        client = Client()
+        re_write_prompt = client.pull_prompt("efriis/self-rag-question-rewriter")
+
+        # 가져온 리라이트 프롬프트와 모델을 결합하여 질문 리라이터 체인 생성
         question_rewriter = re_write_prompt | self.model | StrOutputParser()
 
         return question_rewriter

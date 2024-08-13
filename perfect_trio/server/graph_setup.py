@@ -1,6 +1,7 @@
 from langgraph.graph import StateGraph
 from nodes import GraphNodes
 from edges import EdgeGraph
+from models import Input, Output
 
 def create_chain(llm, retriever, retrieval_grader, hallucination_grader, code_evaluator, question_rewriter):
     workflow = StateGraph(Input)
