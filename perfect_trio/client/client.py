@@ -13,8 +13,6 @@ if input_text:
                 for key, value in output.items():
                     # Node
                     pprint(f"Node '{key}':")
-                    # 선택적으로 각 노드에서 전체 상태를 출력할 수 있습니다.
-                    # pprint.pprint(value["keys"], indent=2, width=80, depth=None)
                 pprint("\n---\n")
             output = value['generation']  
             st.write(output)
