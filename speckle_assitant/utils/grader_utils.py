@@ -44,6 +44,7 @@ class GraderUtils:
 
     def create_code_evaluator(self):
         eval_template = PromptTemplate(
+
             template="""<|begin_of_text|><|start_header_id|>system<|end_header_id|> You are a code evaluator assessing whether the generated code is correct and relevant to the given question.
             Provide a JSON response with the following keys:
 
@@ -60,6 +61,7 @@ class GraderUtils:
             Here are the relevant documents: {documents}
             <|eot_id|><|start_header_id|>assistant<|end_header_id|>""",
             input_variables=["generation", "input", "documents"],
+            
         )
         return eval_template | self.model | JsonOutputParser()
 
