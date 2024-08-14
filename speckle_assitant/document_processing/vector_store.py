@@ -2,7 +2,7 @@ from typing import List, Optional
 from langchain_openai import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from document import Document
+from langchain_core.documents import Document
 
 def create_vector_store(docs: List[Document], store_path: Optional[str] = None) -> FAISS:
     """

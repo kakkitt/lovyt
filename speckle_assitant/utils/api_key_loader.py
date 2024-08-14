@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv, find_dotenv
 
 def load_api_keys():
-    load_dotenv(find_dotenv())
+    load_dotenv(r'C:\Users\user\Desktop\LangChain\Daily\all.env')
     
     api_keys = {
         'OPENAI_API_KEY': os.getenv('OPENAI_API_KEY'),
@@ -20,3 +20,5 @@ def load_api_keys():
 def set_api_keys(api_keys):
     for key, value in api_keys.items():
         os.environ[key] = value
+
+        

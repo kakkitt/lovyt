@@ -1,6 +1,6 @@
 from typing import List
 from langchain_community.document_loaders import FireCrawlLoader
-from document import Document
+from langchain_core.documents import Document
 
 class DocumentLoader:
     def __init__(self, api_key: str):
